@@ -2,10 +2,12 @@
 #include "ComercioCaravana.h"
 #include "MilitarCaravana.h"
 #include "SecretaCaravana.h"
+#include "Cidade.h"
 
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <cmath> // Para usar std::abs
 
 CommandHandler::CommandHandler(Map* initialMap) : currentMap(initialMap) {
    initializeCaravans();
@@ -94,7 +96,145 @@ void CommandHandler::handleCommand(const std::string& command) {
                std::cout << "Use: move <id> <linha> <coluna>" << std::endl;
             }
 
-    }
+    }  else if (tokens[0] == "prox") {
+        if (tokens.size() == 2) {
+            try {
+                int turns = std::stoi(tokens[1]);
+                for (int i = 0; i < turns; ++i) {
+                    // Não faz nada por enquanto, o loop principal é que avança os turnos e imprime o mapa
+                    std::cout << "Avançando turno..." << std::endl;
+                 }
+            } catch (const std::invalid_argument& e) {
+                std::cerr << "Use: prox <numero_de_turnos>" << std::endl;
+            }
+        } else {
+            std::cout << "Use: prox <numero_de_turnos>" << std::endl;
+        }
+    }else if (tokens[0] == "compra") {
+        if (tokens.size() == 3) {
+            try {
+                 int cityId = std::stoi(tokens[1]);
+                 int amount = std::stoi(tokens[2]);
+
+                  bool cidadeEncontrada = false;
+                   for (Cidade* cidade : currentMap->getCidades()) {
+                        if (cidade->getId() == cityId) {
+                            cidadeEncontrada = true;
+                               // Procurar a caravana mais proxima da cidade
+                            int closestCaravanId = -1;
+                            double closestDistance = std::numeric_limits<double>::max();
+                              for(Caravana* caravana : caravanas)
+                              {
+                                double distance = std::sqrt(std::pow(caravana->getRow() - cidade->getRow(), 2) + std::pow(caravana->getCol() - cidade->getCol(), 2));
+                                if(distance < closestDistance)
+                                {
+                                  closestDistance = distance;
+                                  closestCaravanId = caravana->getId();
+                                }
+                              }
+                            // Se houver uma caravana próxima, permite fazer a compra
+                            if(closestCaravanId != -1)
+                            {
+                              for(Caravana* caravana : caravanas)
+                              {
+                                if(caravana->getId() == closestCaravanId)
+                                {
+                                      if(cidade->getStock() >= amount)
+                                     {
+                                          int buyPrice = currentMap->getBuyPrice();
+                                           int totalPrice = amount * buyPrice;
+                                           if(amount <= caravana->getCapacity()){
+                                               if (totalPrice <= currentMap->getInitialCoins()){ // Por enquanto, como não temos um atributo de moedas nas caravanas, usamos as moedas iniciais para testar o sistema.
+                                                   // Implementar lógica de compra aqui
+                                                   cidade->setStock(cidade->getStock() - amount);
+                                                    currentMap->setInitialCoins(currentMap->getInitialCoins() - totalPrice);  // Por enquanto, como não temos um atributo de moedas nas caravanas, usamos as moedas iniciais para testar o sistema.
+                                                    std::cout << "Caravana " << closestCaravanId << " comprou " << amount << " unidades em Cidade " << cityId << " por " << totalPrice << " moedas." << std::endl;
+                                               }else{
+                                                   std::cout << "Moedas insuficientes na caravana " << closestCaravanId << std::endl;
+                                                 }
+                                            }else {
+                                              std::cout << "Capacidade de carga da caravana " << closestCaravanId << " insuficiente" << std::endl;
+                                             }
+
+                                        }else {
+                                             std::cout << "Stock insuficiente na cidade " << cityId << std::endl;
+                                         }
+                                    }
+                               }
+                             } else{
+                                 std::cout << "Nenhuma caravana próxima da cidade" << cityId << std::endl;
+                             }
+
+
+                         }
+                    }
+                    if(!cidadeEncontrada)
+                     std::cout << "Cidade com ID " << cityId << " não encontrada" << std::endl;
+
+            } catch (const std::invalid_argument& e) {
+               std::cerr << "Use: compra <id_cidade> <quantidade>" << std::endl;
+            }
+        }else{
+              std::cout << "Use: compra <id_cidade> <quantidade>" << std::endl;
+        }
+
+    }else if (tokens[0] == "vende") {
+        if (tokens.size() == 3) {
+            try {
+                 int cityId = std::stoi(tokens[1]);
+                 int amount = std::stoi(tokens[2]);
+
+                  bool cidadeEncontrada = false;
+                  for (Cidade* cidade : currentMap->getCidades()) {
+                      if (cidade->getId() == cityId) {
+                            cidadeEncontrada = true;
+                               // Procurar a caravana mais proxima da cidade
+                            int closestCaravanId = -1;
+                            double closestDistance = std::numeric_limits<double>::max();
+                              for(Caravana* caravana : caravanas)
+                              {
+                                double distance = std::sqrt(std::pow(caravana->getRow() - cidade->getRow(), 2) + std::pow(caravana->getCol() - cidade->getCol(), 2));
+                                if(distance < closestDistance)
+                                {
+                                  closestDistance = distance;
+                                  closestCaravanId = caravana->getId();
+                                }
+                              }
+                            // Se houver uma caravana próxima, permite fazer a venda
+                            if(closestCaravanId != -1)
+                            {
+                               for(Caravana* caravana : caravanas)
+                              {
+                                if(caravana->getId() == closestCaravanId)
+                                {
+                                    if(amount > 0){
+                                        int sellPrice = currentMap->getSellPrice();
+                                         int totalPrice = amount * sellPrice;
+                                        // Implementar lógica de venda aqui
+                                          cidade->setStock(cidade->getStock() + amount);
+                                         currentMap->setInitialCoins(currentMap->getInitialCoins() + totalPrice);   // Por enquanto, como não temos um atributo de moedas nas caravanas, usamos as moedas iniciais para testar o sistema.
+                                         std::cout << "Caravana " << closestCaravanId << " vendeu " << amount << " unidades em Cidade " << cityId << " por " << totalPrice << " moedas." << std::endl;
+
+                                     }else{
+                                        std::cout << "Quantidade a vender inválida!" << std::endl;
+                                      }
+                                }
+                              }
+                            } else{
+                                 std::cout << "Nenhuma caravana próxima da cidade" << cityId << std::endl;
+                             }
+                         }
+                    }
+                    if(!cidadeEncontrada)
+                       std::cout << "Cidade com ID " << cityId << " não encontrada" << std::endl;
+            } catch (const std::invalid_argument& e) {
+               std::cerr << "Use: vende <id_cidade> <quantidade>" << std::endl;
+            }
+        }else{
+             std::cout << "Use: vende <id_cidade> <quantidade>" << std::endl;
+        }
+
+     }
      else {
        std::cout << "Comando inválido." << std::endl;
     }

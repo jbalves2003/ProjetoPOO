@@ -8,11 +8,16 @@ Map::Map(const char* filename) : buffer(nullptr), rows(0), cols(0),initial_coins
   item_duration(0), max_items(0), sell_price(0), buy_price(0), caravan_price(0), barbarian_spawn_interval(0), barbarian_duration(0)
 {
         loadMap(filename);
+        initializeCities();
 }
 
 Map::~Map() {
         if(buffer)
             delete buffer;
+       for (Cidade* cidade : cidades) {
+             delete cidade;
+          }
+       cidades.clear();
 }
 
 
@@ -137,4 +142,31 @@ int Map::getBarbarianDuration() const {
 
 Buffer* Map::getBuffer() {
    return buffer;
+ }
+ std::vector<Cidade*> Map::getCidades() {
+    return cidades;
+ }
+ void Map::initializeCities(){
+     for (Cidade* cidade : cidades) {
+           delete cidade;
+      }
+     cidades.clear();
+
+    if (buffer == nullptr) {
+       return;
+    }
+
+   int cityId = 1;
+     int rows = getRows();
+     int cols = getCols();
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+         if (buffer->getGrid()[i][j] == 'c') {
+           cidades.push_back(new Cidade(cityId++, i, j, 100, 2, 'c')); //Inicializar cidades com valores por defeito
+            }
+        }
+    }
+ }
+ void Map::setInitialCoins(int coins) {
+  initial_coins = coins;
  }

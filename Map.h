@@ -3,6 +3,9 @@
 
 #include "Buffer.h"
 #include <string>
+#include <vector>
+#include "Cidade.h"
+
 
 class Map {
 private:
@@ -18,6 +21,7 @@ private:
     int caravan_price;
     int barbarian_spawn_interval;
     int barbarian_duration;
+    std::vector<Cidade*> cidades;
 
 public:
     // Construtor
@@ -43,7 +47,11 @@ public:
     int getBarbarianSpawnInterval() const;
     int getBarbarianDuration() const;
 
-    Buffer* getBuffer(); // Adicionando o método getBuffer
+    Buffer* getBuffer();
+    std::vector<Cidade*> getCidades();
+    void initializeCities(); // Método para inicializar cidades
+
+    void setInitialCoins(int coins);
 
 };
 

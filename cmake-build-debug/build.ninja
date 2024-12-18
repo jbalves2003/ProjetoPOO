@@ -97,6 +97,12 @@ build CMakeFiles/ProjetoPoo.dir/SecretaCaravana.cpp.obj: CXX_COMPILER__ProjetoPo
   OBJECT_DIR = CMakeFiles\ProjetoPoo.dir
   OBJECT_FILE_DIR = CMakeFiles\ProjetoPoo.dir
 
+build CMakeFiles/ProjetoPoo.dir/Cidade.cpp.obj: CXX_COMPILER__ProjetoPoo_unscanned_Debug C$:/Users/2003j/Downloads/ProjetoPoo/Cidade.cpp || cmake_object_order_depends_target_ProjetoPoo
+  DEP_FILE = CMakeFiles\ProjetoPoo.dir\Cidade.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\ProjetoPoo.dir
+  OBJECT_FILE_DIR = CMakeFiles\ProjetoPoo.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target ProjetoPoo
@@ -105,7 +111,7 @@ build CMakeFiles/ProjetoPoo.dir/SecretaCaravana.cpp.obj: CXX_COMPILER__ProjetoPo
 #############################################
 # Link the executable ProjetoPoo.exe
 
-build ProjetoPoo.exe: CXX_EXECUTABLE_LINKER__ProjetoPoo_Debug CMakeFiles/ProjetoPoo.dir/main.cpp.obj CMakeFiles/ProjetoPoo.dir/Buffer.cpp.obj CMakeFiles/ProjetoPoo.dir/Map.cpp.obj CMakeFiles/ProjetoPoo.dir/CommandHandler.cpp.obj CMakeFiles/ProjetoPoo.dir/Caravana.cpp.obj CMakeFiles/ProjetoPoo.dir/ComercioCaravana.cpp.obj CMakeFiles/ProjetoPoo.dir/MilitarCaravana.cpp.obj CMakeFiles/ProjetoPoo.dir/SecretaCaravana.cpp.obj
+build ProjetoPoo.exe: CXX_EXECUTABLE_LINKER__ProjetoPoo_Debug CMakeFiles/ProjetoPoo.dir/main.cpp.obj CMakeFiles/ProjetoPoo.dir/Buffer.cpp.obj CMakeFiles/ProjetoPoo.dir/Map.cpp.obj CMakeFiles/ProjetoPoo.dir/CommandHandler.cpp.obj CMakeFiles/ProjetoPoo.dir/Caravana.cpp.obj CMakeFiles/ProjetoPoo.dir/ComercioCaravana.cpp.obj CMakeFiles/ProjetoPoo.dir/MilitarCaravana.cpp.obj CMakeFiles/ProjetoPoo.dir/SecretaCaravana.cpp.obj CMakeFiles/ProjetoPoo.dir/Cidade.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\ProjetoPoo.dir

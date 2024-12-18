@@ -17,4 +17,6 @@ add_executable(ProjetoPoo main.cpp
         MilitarCaravana.cpp
         MilitarCaravana.h
         SecretaCaravana.cpp
-        SecretaCaravana.h)
+        SecretaCaravana.h
+        Cidade.cpp
+        Cidade.h)
