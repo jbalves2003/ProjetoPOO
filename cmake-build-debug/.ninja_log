@@ -1,0 +1,16 @@
+# ninja log v5
+5	438	7562436728589171	CMakeFiles/ProjetoPoo.dir/main.cpp.obj	b8f5e9e48f1a996a
+13	436	7562435735731054	CMakeFiles/ProjetoPoo.dir/Buffer.cpp.obj	be005a02a186bc8f
+531	654	7562436730706663	ProjetoPoo.exe	7538973cba124c42
+17	531	7562436729522836	CMakeFiles/ProjetoPoo.dir/CommandHandler.cpp.obj	9cf446454b6b29f3
+18	497	7562435736367789	CMakeFiles/ProjetoPoo.dir/Map.cpp.obj	91d05423e52c5844
+22	404	7562441849926357	CMakeFiles/ProjetoPoo.dir/Caravana.cpp.obj	fa9a2d0b072672c7
+26	407	7562441849946372	CMakeFiles/ProjetoPoo.dir/ComercioCaravana.cpp.obj	58028eb2727fd4e7
+31	410	7562441849984966	CMakeFiles/ProjetoPoo.dir/MilitarCaravana.cpp.obj	1aa68c05c6d99f5f
+38	413	7562441850014990	CMakeFiles/ProjetoPoo.dir/SecretaCaravana.cpp.obj	51b9798396f7238c
+5	518	7562441851044376	CMakeFiles/ProjetoPoo.dir/main.cpp.obj	b8f5e9e48f1a996a
+17	431	7562442730977402	CMakeFiles/ProjetoPoo.dir/Buffer.cpp.obj	be005a02a186bc8f
+5	459	7562442731267959	CMakeFiles/ProjetoPoo.dir/main.cpp.obj	b8f5e9e48f1a996a
+21	484	7562442731520160	CMakeFiles/ProjetoPoo.dir/Map.cpp.obj	91d05423e52c5844
+25	578	7562442732458203	CMakeFiles/ProjetoPoo.dir/CommandHandler.cpp.obj	9cf446454b6b29f3
+578	960	7562442736248886	ProjetoPoo.exe	730f5f13dfe2b908
