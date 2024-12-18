@@ -19,3 +19,14 @@
 18	601	7562486093091898	CMakeFiles/ProjetoPoo.dir/Map.cpp.obj	91d05423e52c5844
 22	738	7562486094452737	CMakeFiles/ProjetoPoo.dir/CommandHandler.cpp.obj	9cf446454b6b29f3
 738	1121	7562486098259290	ProjetoPoo.exe	fd760bd7b4e510cd
+28	421	7562491999713949	CMakeFiles/ProjetoPoo.dir/ComercioCaravana.cpp.obj	58028eb2727fd4e7
+33	422	7562491999713949	CMakeFiles/ProjetoPoo.dir/MilitarCaravana.cpp.obj	1aa68c05c6d99f5f
+38	429	7562491999788923	CMakeFiles/ProjetoPoo.dir/SecretaCaravana.cpp.obj	51b9798396f7238c
+22	520	7562492000708468	CMakeFiles/ProjetoPoo.dir/Caravana.cpp.obj	fa9a2d0b072672c7
+5	556	7562492001063510	CMakeFiles/ProjetoPoo.dir/main.cpp.obj	b8f5e9e48f1a996a
+18	927	7562492004750338	CMakeFiles/ProjetoPoo.dir/CommandHandler.cpp.obj	9cf446454b6b29f3
+927	1088	7562492006342532	ProjetoPoo.exe	fd760bd7b4e510cd
+6	826	7562496701863863	CMakeFiles/ProjetoPoo.dir/CommandHandler.cpp.obj	9cf446454b6b29f3
+826	988	7562496703442156	ProjetoPoo.exe	fd760bd7b4e510cd
+6	877	7562503257664761	CMakeFiles/ProjetoPoo.dir/CommandHandler.cpp.obj	9cf446454b6b29f3
+877	1044	7562503259305918	ProjetoPoo.exe	fd760bd7b4e510cd

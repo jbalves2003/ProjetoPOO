@@ -30,10 +30,13 @@ public:
     void setRow(int row);
     void setCol(int col);
     void setWater(int water);
+    void setCrew(int crew); // Adicionar método para alterar o número de tripulantes
 
 
     // Método virtual para mover a caravana (será implementado nas classes derivadas)
     virtual void move(int newRow, int newCol) {}
+
+    virtual int combat(Caravana* other);
 
     virtual ~Caravana() {}
 };

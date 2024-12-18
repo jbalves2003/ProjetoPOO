@@ -8,9 +8,11 @@
 #include <sstream>
 #include <vector>
 #include <cmath> // Para usar std::abs
+ #include <random>
 
 CommandHandler::CommandHandler(Map* initialMap) : currentMap(initialMap) {
    initializeCaravans();
+    initializeBarbaros();
 }
 
 CommandHandler::~CommandHandler() {
@@ -20,6 +22,11 @@ CommandHandler::~CommandHandler() {
        delete caravana;
     }
     caravanas.clear();
+    for(Caravana* barbaro : barbaros) {
+        delete barbaro;
+    }
+   barbaros.clear();
+
 }
 
 void CommandHandler::handleCommand(const std::string& command) {
@@ -46,7 +53,8 @@ void CommandHandler::handleCommand(const std::string& command) {
            if(currentMap)
             {
               currentMap->printMap();
-             initializeCaravans();
+              initializeCaravans();
+              initializeBarbaros();
              }
            else
               std::cerr << "Erro ao carregar novo mapa!" << std::endl;
@@ -97,19 +105,60 @@ void CommandHandler::handleCommand(const std::string& command) {
             }
 
     }  else if (tokens[0] == "prox") {
-        if (tokens.size() == 2) {
-            try {
-                int turns = std::stoi(tokens[1]);
-                for (int i = 0; i < turns; ++i) {
-                    // Não faz nada por enquanto, o loop principal é que avança os turnos e imprime o mapa
-                    std::cout << "Avançando turno..." << std::endl;
-                 }
+       if (tokens.size() == 2) {
+         try {
+           int turns = std::stoi(tokens[1]);
+              for (int i = 0; i < turns; ++i) {
+               // Combate
+                std::vector<std::pair<Caravana*, Caravana*>> combates;
+                  for (Caravana* caravana : caravanas) {
+                     for (Caravana* barbaro : barbaros) {
+                       if (std::abs(caravana->getRow() - barbaro->getRow()) <= 1 &&
+                             std::abs(caravana->getCol() - barbaro->getCol()) <= 1) {
+                          combates.push_back({caravana, barbaro});
+                             }
+                         }
+                      }
+                    for (const auto& combate : combates) {
+                      Caravana* caravana = combate.first;
+                      Caravana* barbaro = combate.second;
+
+                        int result = caravana->combat(barbaro);
+                        if (result > 0) {
+                          std::cout << "Caravana " << caravana->getId() << " venceu o combate contra o barbaro " << barbaro->getId() << std::endl;
+                            // Remover barbaro
+                          for (size_t i = 0; i < barbaros.size(); ++i) {
+                             if (barbaros[i]->getId() == barbaro->getId()) {
+                               delete barbaros[i];
+                                barbaros.erase(barbaros.begin() + i);
+                                  break;
+                                   }
+                               }
+                           } else if (result < 0) {
+                          std::cout << "Caravana " << caravana->getId() << " perdeu o combate contra o barbaro " << barbaro->getId() << std::endl;
+                           // Remover Caravana
+                          for (size_t i = 0; i < caravanas.size(); ++i) {
+                             if (caravanas[i]->getId() == caravana->getId()) {
+                                delete caravanas[i];
+                                 caravanas.erase(caravanas.begin() + i);
+                                  break;
+                              }
+                           }
+
+                         } else {
+                           std::cout << "Combate entre a Caravana " << caravana->getId() << " e o barbaro " << barbaro->getId() << " resultou num empate" << std::endl;
+                           }
+                     }
+                  std::cout << "Avançando turno..." << std::endl;
+                }
+                   currentMap->printMap(); //Imprimir o mapa apos os combates
+
             } catch (const std::invalid_argument& e) {
-                std::cerr << "Use: prox <numero_de_turnos>" << std::endl;
-            }
-        } else {
-            std::cout << "Use: prox <numero_de_turnos>" << std::endl;
-        }
+              std::cerr << "Use: prox <numero_de_turnos>" << std::endl;
+              }
+          } else {
+              std::cout << "Use: prox <numero_de_turnos>" << std::endl;
+              }
     }else if (tokens[0] == "compra") {
         if (tokens.size() == 3) {
             try {
@@ -277,4 +326,27 @@ void CommandHandler::handleCommand(const std::string& command) {
          }
      }
 
+ }
+
+void CommandHandler::initializeBarbaros(){
+       for (Caravana* barbaro : barbaros) {
+             delete barbaro;
+          }
+         barbaros.clear();
+
+
+     if (currentMap == nullptr) {
+          return;
+       }
+
+        int barbaroId = caravanas.size() + 1; //Garante que não existe conflito de Ids
+       int rows = currentMap->getRows();
+       int cols = currentMap->getCols();
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+             if (currentMap->getBuffer()->getGrid()[i][j] == 'b') {
+               barbaros.push_back(new MilitarCaravana(barbaroId++, i, j, 5, 2, 20, 'b'));  //Inicializar caravanas bárbaras com valores por defeito
+                 }
+              }
+           }
  }
